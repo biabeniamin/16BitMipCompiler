@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace _16BitMipsCompiler
 {
-    public class IInstruction : Instruction
+    public class IInstruction
     {
         public ushort InstructionCode => 452;
         private Register _destination;

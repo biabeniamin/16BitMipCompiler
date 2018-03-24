@@ -8,8 +8,9 @@ namespace _16BitMipsCompiler
 {
     public enum Function
     {
-        Add,
-        And,
-        Xor
+        Nop = 0,
+        Add = 1,
+        And = 2,
+        Xor = 3
     }
 }

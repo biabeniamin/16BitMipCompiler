@@ -58,8 +58,11 @@ namespace _16BitMipsCompiler
             InitializeComponent();
             this.DataContext = this;
             Instructions = new ObservableCollection<Instruction>();
-            Instructions.Add(new RInstruction());
-            Instructions.Add(new IInstruction());
+
+            String line = "and $2,$3, $4";
+            Instruction i = AssemblyParser.Parse(line);
+            int val = i.InstructionCode;
+
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -75,6 +78,8 @@ namespace _16BitMipsCompiler
         {
             //OpenFileDialog ofd = new OpenFileDialog();
             
+
+
         }
     }
 }

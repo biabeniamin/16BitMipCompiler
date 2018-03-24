@@ -12,13 +12,35 @@ namespace _16BitMipsCompiler
         private Register _destination;
         private Register _source1;
         private Register _source2;
-        public ushort InstructionCode => _instructionCode;
+        private Function _function;
+        public int InstructionCode
+        {
+            get
+            {
+                //opcode 0
+                int value = 0;
 
-        public bool HasDestinationRegister => true;
+                //add source1
+                value |= ((int)_source1 << 11);
+                //add source2
+                value |= ((int)_source2 << 8);
+                //add destination
+                value |= ((int)_destination << 5);
+                //add function
+                value |= (int)_function;
 
-        public bool HasSource1Register => true;
+                return value;
+            }
+        }
 
-        public bool HasSource2Register => true;
+        
+
+        public Function Function
+        {
+            get { return _function; }
+            set { _function = value; }
+        }
+
 
         public Register Source1
         {
@@ -35,11 +57,14 @@ namespace _16BitMipsCompiler
             get => _destination;
             set => _destination = value;
         }
-        public InstructionType Type { get => InstructionType.I; set => throw new NotImplementedException(); }
 
-        public RInstruction()
+        public RInstruction(Function function, Register destination, Register source1, Register source2)
         {
-            _instructionCode = 542;
+            _function = function;
+            _source1 = source1;
+            _source2 = source2;
+            _destination = destination;
         }
+
     }
 }
