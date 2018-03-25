@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,6 +25,20 @@ namespace _16BitMipsCompiler
     public partial class MainWindow : Window
     {
         private ObservableCollection<Instruction> _instructions;
+        private List<AssemblyInstruction> instructions = new List<AssemblyInstruction>();
+        private DelegateCommand _delegateLoadCommand;
+        private DelegateCommand _delegateSaveCommand;
+
+        public DelegateCommand DelegateSaveCommand
+        {
+            get { return _delegateSaveCommand; }
+            set { _delegateSaveCommand = value; }
+        }
+        public DelegateCommand DelegateLoadCommand
+        {
+            get { return _delegateLoadCommand; }
+            set { _delegateLoadCommand = value; }
+        }
 
         public ObservableCollection<Instruction> Instructions
         {
@@ -57,12 +72,51 @@ namespace _16BitMipsCompiler
         {
             InitializeComponent();
             this.DataContext = this;
+
+            DelegateLoadCommand = new DelegateCommand(LoadFromFile);
+            DelegateSaveCommand = new DelegateCommand(SaveInFile);
+
             Instructions = new ObservableCollection<Instruction>();
+            instructions.Add(new AssemblyInstruction("add", 0, InstructionType.R));
+            instructions.Add(new AssemblyInstruction("and", 1, InstructionType.R));
+            instructions.Add(new AssemblyInstruction("or", 2, InstructionType.R));
+            instructions.Add(new AssemblyInstruction("not", 3, InstructionType.R));
 
-            String line = "and $2,$3, $4";
-            Instruction i = AssemblyParser.Parse(line);
-            int val = i.InstructionCode;
+            instructions.Add(new AssemblyInstruction("addi", 0, InstructionType.I));
+            instructions.Add(new AssemblyInstruction("lw", 1, InstructionType.I));
 
+        }
+
+        private void LoadFromFile()
+        {
+            using (StreamReader reader = new StreamReader("code.txt"))
+            {
+                while (!reader.EndOfStream)
+                {
+                    String line = reader.ReadLine();
+
+                    Instruction i = AssemblyParser.Parse(instructions, line);
+                    Instructions.Add(i);
+
+                    int var = i.InstructionCode;
+                }
+
+
+            }
+
+        }
+
+        private void SaveInFile()
+        {
+            using (StreamWriter writer = new StreamWriter("code.hex"))
+            {
+                foreach(Instruction instruct in Instructions)
+                {
+                    writer.Write("\"");
+                    writer.Write(instruct.InstuctionCodeSepareted);
+                    writer.WriteLine("\"");
+                }
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -74,12 +128,5 @@ namespace _16BitMipsCompiler
 
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            //OpenFileDialog ofd = new OpenFileDialog();
-            
-
-
-        }
     }
 }

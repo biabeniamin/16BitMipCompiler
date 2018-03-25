@@ -5,50 +5,65 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:_16BitMipsCompiler"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="370.144" Width="796.942">
     <Grid x:Name="grid">
-        <ListView Margin="25,10,215,109" ItemsSource="{Binding Instructions}">
+        <ListView Margin="25,10,117,25" ItemsSource="{Binding Instructions}">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="">
+                    <GridViewColumn Header="Type">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <ComboBox SelectedValue="{Binding Destination}" ItemsSource="{Binding DataContext.InstructionTypes, ElementName=grid}" IsEnabled="{Binding HasDestinationRegister}"></ComboBox>
+                                <TextBlock Text="{Binding AssemblyInstruction.Mnemonic}"></TextBlock>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Type">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Type}"></TextBlock>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                     <GridViewColumn Header="Rs">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <ComboBox SelectedValue="{Binding Source1}" ItemsSource="{Binding DataContext.Registers, ElementName=grid}" IsEnabled="{Binding HasSource1Register}"></ComboBox>
+                                <ComboBox SelectedValue="{Binding Source1}" ItemsSource="{Binding DataContext.Registers, ElementName=grid}"></ComboBox>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                     <GridViewColumn Header="Rt">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <ComboBox SelectedValue="{Binding Source2}" ItemsSource="{Binding DataContext.Registers, ElementName=grid}" IsEnabled="{Binding HasSource2Register}"></ComboBox>
+                                <ComboBox SelectedValue="{Binding Source2}" ItemsSource="{Binding DataContext.Registers, ElementName=grid}"></ComboBox>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                     <GridViewColumn Header="Rd">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <ComboBox SelectedValue="{Binding Destination}" ItemsSource="{Binding DataContext.Registers, ElementName=grid}" IsEnabled="{Binding HasDestinationRegister}"></ComboBox>
+                                <ComboBox SelectedValue="{Binding Destination}" ItemsSource="{Binding DataContext.Registers, ElementName=grid}"></ComboBox>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Header="InstructionCOde">
+                    <GridViewColumn Header="Immediate">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox Text="asf" IsEnabled="{Binding HasDestinationRegister}"></TextBox>
+                                <TextBox Text="{Binding Immediate}"></TextBox>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Instruction Code">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding InstuctionCodeSepareted}"></TextBlock>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button Content="Button" HorizontalAlignment="Left" Margin="340,81,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
+        <Button Content="Load" HorizontalAlignment="Left" Margin="704,29,0,0" VerticalAlignment="Top" Width="75" Command="{Binding DelegateLoadCommand}"/>
+        <Button Content="Save" HorizontalAlignment="Left" Margin="704,54,0,0" VerticalAlignment="Top" Width="75" Command="{Binding DelegateSaveCommand}"/>
 
     </Grid>
 </Window>

@@ -39,10 +39,11 @@ namespace _16BitMipsCompiler
             set { _mnemonic = value; }
         }
 
-        public AssemblyInstruction(String mnemonic, ushort instructionCode)
+        public AssemblyInstruction(String mnemonic, ushort instructionCode, InstructionType type)
         {
             _mnemonic = mnemonic;
             _instructionCode = instructionCode;
+            _type = type;
         }
 
 

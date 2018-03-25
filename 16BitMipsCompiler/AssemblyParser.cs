@@ -8,24 +8,23 @@ namespace _16BitMipsCompiler
 {
     public class AssemblyParser
     {
-        public static Function GetFunctionFromString(String line)
+        public static AssemblyInstruction GetAssemblyInstructionFromString(List<AssemblyInstruction> instructions, String line)
         {
             if (0 == line.Length)
             {
-                return Function.Nop;
+                return null;
             }
 
             String[] elements = line.Split(' ');
             if (1 > elements.Length)
             {
-                return Function.Nop;
+                return null;
             }
 
-            List<Function> possibleFunctions = new List<Function>((Function[])Enum.GetValues(typeof(Function)));
 
-            Function function = possibleFunctions.Find((funct) => funct.ToString().ToLower().Contains(elements[0].ToLower()));
+            AssemblyInstruction instruction = instructions.Find((ins) => ins.Mnemonic.ToLower().Contains(elements[0].ToLower()));
 
-            return function;
+            return instruction;
         }
 
         public static String[] GetParametersString(String line)
@@ -54,37 +53,34 @@ namespace _16BitMipsCompiler
             return register;
         }
 
-        public static InstructionType GetInstructionType(Function function)
+        public static ushort GetValue(String[] parameters, ushort index)
         {
-            int value = (int)function;
-
-            if (0 == (value >> 2))
-            {
-                return InstructionType.R;
-            }
-
-            else if (0 < (value >> 2))
-            {
-                return InstructionType.I;
-            }
-
-            return InstructionType.J;
+            return Convert.ToUInt16(parameters[index]);
         }
 
-        public static Instruction Parse(String line)
+        public static Instruction Parse(List<AssemblyInstruction> instructions, String line)
         {
-            Function function = AssemblyParser.GetFunctionFromString(line);
+            AssemblyInstruction instruction = AssemblyParser.GetAssemblyInstructionFromString(instructions, line);
             String[] parameters = GetParametersString(line);
-            var type = GetInstructionType(function);
 
-            switch(type)
+            Register destination, register1, register2;
+            ushort immediate;
+
+            switch (instruction.Type)
             {
                 case InstructionType.R:
-                    Register destination = AssemblyParser.GetRegister(parameters, 1);
-                    Register register1 = AssemblyParser.GetRegister(parameters, 1);
-                    Register register2 = AssemblyParser.GetRegister(parameters, 2);
+                    destination = AssemblyParser.GetRegister(parameters, 0);
+                    register1 = AssemblyParser.GetRegister(parameters, 1);
+                    register2 = AssemblyParser.GetRegister(parameters, 2);
 
-                    return new RInstruction(function, destination, register1, register2);
+                    return new RInstruction(instruction, destination, register1, register2);
+
+                case InstructionType.I:
+                    register1 = AssemblyParser.GetRegister(parameters, 0);
+                    register2 = AssemblyParser.GetRegister(parameters, 1);
+                    immediate = GetValue(parameters, 2);
+
+                    return new IInstruction(instruction, register1, register2, immediate);
             }
             
 

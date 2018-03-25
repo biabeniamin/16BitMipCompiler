@@ -55,7 +55,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="AssemblyParser.cs" />
-    <Compile Include="Function.cs" />
+    <Compile Include="DelegateCommand.cs" />
     <Compile Include="IInstruction.cs" />
     <Compile Include="Instruction.cs" />
     <Compile Include="InstructionType.cs" />

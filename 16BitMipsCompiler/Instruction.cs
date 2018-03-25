@@ -8,7 +8,19 @@ namespace _16BitMipsCompiler
 {
     public interface Instruction
     {
+        InstructionType Type
+        {
+            get;
+        }
         int InstructionCode
+        {
+            get;
+        }
+        String InstuctionCodeSepareted
+        {
+            get;
+        }
+        AssemblyInstruction AssemblyInstruction
         {
             get;
         }
