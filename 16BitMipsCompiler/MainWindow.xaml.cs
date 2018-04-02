@@ -77,13 +77,19 @@ namespace _16BitMipsCompiler
             DelegateSaveCommand = new DelegateCommand(SaveInFile);
 
             Instructions = new ObservableCollection<Instruction>();
-            instructions.Add(new AssemblyInstruction("add", 0, InstructionType.R));
-            instructions.Add(new AssemblyInstruction("and", 1, InstructionType.R));
-            instructions.Add(new AssemblyInstruction("or", 2, InstructionType.R));
-            instructions.Add(new AssemblyInstruction("not", 3, InstructionType.R));
+            instructions.Add(new AssemblyInstruction("sll", 0, InstructionType.R));
+            instructions.Add(new AssemblyInstruction("srl", 1, InstructionType.R));
+            instructions.Add(new AssemblyInstruction("add", 2, InstructionType.R));
+            instructions.Add(new AssemblyInstruction("sub", 3, InstructionType.R));
+            instructions.Add(new AssemblyInstruction("and", 4, InstructionType.R));
+            instructions.Add(new AssemblyInstruction("or", 5, InstructionType.R));
+            instructions.Add(new AssemblyInstruction("not", 6, InstructionType.R));
+            instructions.Add(new AssemblyInstruction("xor", 7, InstructionType.R));
 
             instructions.Add(new AssemblyInstruction("addi", 0, InstructionType.I));
             instructions.Add(new AssemblyInstruction("lw", 1, InstructionType.I));
+            instructions.Add(new AssemblyInstruction("sw", 2, InstructionType.I));
+            instructions.Add(new AssemblyInstruction("beq", 3, InstructionType.I));
 
         }
 
