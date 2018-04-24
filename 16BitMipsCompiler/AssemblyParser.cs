@@ -73,14 +73,18 @@ namespace _16BitMipsCompiler
                     register1 = AssemblyParser.GetRegister(parameters, 1);
                     register2 = AssemblyParser.GetRegister(parameters, 2);
 
-                    return new RInstruction(instruction, destination, register1, register2);
+                    return new RInstruction(instruction, line, destination, register1, register2);
 
                 case InstructionType.I:
                     register1 = AssemblyParser.GetRegister(parameters, 0);
                     register2 = AssemblyParser.GetRegister(parameters, 1);
                     immediate = GetValue(parameters, 2);
 
-                    return new IInstruction(instruction, register1, register2, immediate);
+                    return new IInstruction(instruction, line, register1, register2, immediate);
+
+                case InstructionType.J:
+                    immediate = GetValue(parameters, 0);
+                    return new JInstruction(instruction, line, immediate);
             }
             
 

@@ -59,6 +59,7 @@
     <Compile Include="IInstruction.cs" />
     <Compile Include="Instruction.cs" />
     <Compile Include="InstructionType.cs" />
+    <Compile Include="JInstruction.cs" />
     <Compile Include="Register.cs" />
     <Compile Include="RInstruction.cs" />
     <Page Include="MainWindow.xaml">

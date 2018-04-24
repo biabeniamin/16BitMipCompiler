@@ -86,10 +86,14 @@ namespace _16BitMipsCompiler
             instructions.Add(new AssemblyInstruction("not", 6, InstructionType.R));
             instructions.Add(new AssemblyInstruction("xor", 7, InstructionType.R));
 
-            instructions.Add(new AssemblyInstruction("addi", 0, InstructionType.I));
+            
             instructions.Add(new AssemblyInstruction("lw", 1, InstructionType.I));
             instructions.Add(new AssemblyInstruction("sw", 2, InstructionType.I));
             instructions.Add(new AssemblyInstruction("beq", 3, InstructionType.I));
+            instructions.Add(new AssemblyInstruction("addi", 5, InstructionType.I));
+
+            instructions.Add(new AssemblyInstruction("jmp", 4, InstructionType.J));
+
 
         }
 
@@ -118,9 +122,11 @@ namespace _16BitMipsCompiler
             {
                 foreach(Instruction instruct in Instructions)
                 {
-                    writer.Write("\"");
+                    writer.Write("B\"");
                     writer.Write(instruct.InstuctionCodeSepareted);
-                    writer.WriteLine("\"");
+                    writer.Write("\",\t--");
+                    writer.Write(instruct.AssemblyInstructionText);
+                    writer.WriteLine("");
                 }
             }
         }

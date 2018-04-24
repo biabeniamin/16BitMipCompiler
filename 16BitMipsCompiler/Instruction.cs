@@ -20,6 +20,12 @@ namespace _16BitMipsCompiler
         {
             get;
         }
+        String AssemblyInstructionText
+        {
+            get;
+            set;
+        }
+
         AssemblyInstruction AssemblyInstruction
         {
             get;

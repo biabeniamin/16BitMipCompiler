@@ -6,11 +6,8 @@ using System.Threading.Tasks;
 
 namespace _16BitMipsCompiler
 {
-    public class IInstruction : Instruction
+    public class JInstruction : Instruction
     {
-        private Register _destination;
-        private Register _source1;
-        private Register _source2;
         private AssemblyInstruction _assemblyInstruction;
         private ushort _immediate;
         private String _assemblyInstructionText;
@@ -20,6 +17,7 @@ namespace _16BitMipsCompiler
             get { return _assemblyInstructionText; }
             set { _assemblyInstructionText = value; }
         }
+
         public ushort Immediate
         {
             get { return _immediate; }
@@ -39,22 +37,7 @@ namespace _16BitMipsCompiler
 
         public bool HasSource2Register => true;
 
-        public Register Source1
-        {
-            get => _source1;
-            set => _source1 = value;
-        }
-        public Register Source2
-        {
-            get => _source2;
-            set => _source2 = value;
-        }
-        public Register Destination
-        {
-            get => _destination;
-            set => _destination = value;
-        }
-        public InstructionType Type => InstructionType.I;
+        public InstructionType Type => InstructionType.J;
 
         public int InstructionCode
         {
@@ -63,10 +46,6 @@ namespace _16BitMipsCompiler
                 //opcode
                 int value = (_assemblyInstruction.InstructionCode << 13);
 
-                //add source1
-                value |= ((int)_source2 << 10);
-                //add source2
-                value |= ((int)_source1 << 7);
                 //add immediate
                 value |= _immediate;
 
@@ -89,24 +68,22 @@ namespace _16BitMipsCompiler
                 String command = builder.ToString();
 
                 command = command.Insert(3, "_");
-                command = command.Insert(7, "_");
-                command = command.Insert(11, "_");
 
                 return command;
             }
         }
 
-        public IInstruction(AssemblyInstruction assemblyInstruction, Register source1, Register source2, ushort immediate)
+        public JInstruction(AssemblyInstruction assemblyInstruction, ushort immediate)
         {
             _assemblyInstruction = assemblyInstruction;
-            _source1 = source1;
-            _source2 = source2;
             _immediate = immediate;
         }
-        public IInstruction(AssemblyInstruction assemblyInstruction, String assemblyInstructionText, Register source1, Register source2, ushort immediate)
-            : this(assemblyInstruction, source1, source2, immediate)
+
+        public JInstruction(AssemblyInstruction assemblyInstruction, String assemblyInstructionText, ushort immediate)
         {
+            _assemblyInstruction = assemblyInstruction;
             _assemblyInstructionText = assemblyInstructionText;
+            _immediate = immediate;
         }
     }
 }

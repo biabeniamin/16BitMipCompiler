@@ -13,6 +13,13 @@ namespace _16BitMipsCompiler
         private Register _source1;
         private Register _source2;
         private AssemblyInstruction _assemblyInstruction;
+        private String _assemblyInstructionText;
+
+        public String AssemblyInstructionText
+        {
+            get { return _assemblyInstructionText; }
+            set { _assemblyInstructionText = value; }
+        }
         public int InstructionCode
         {
             get
@@ -26,6 +33,8 @@ namespace _16BitMipsCompiler
                 value |= ((int)_source2 << 7);
                 //add destination
                 value |= ((int)_destination << 4);
+                //add shift amount
+                value |= (1 << 3);
                 //add function
                 value |= _assemblyInstruction.InstructionCode;
 
@@ -53,6 +62,7 @@ namespace _16BitMipsCompiler
                 command = command.Insert(11, "_");
                 command = command.Insert(15, "_");
                 command = command.Insert(17, "_");
+
 
                 return command;
             }
@@ -92,5 +102,11 @@ namespace _16BitMipsCompiler
             _destination = destination;
         }
 
+        public RInstruction(AssemblyInstruction assemblyInstruction, String assemblyInstructionText, Register destination, Register source1, Register source2)
+            : this(assemblyInstruction, destination, source1, source2)
+        {
+            _assemblyInstructionText = assemblyInstructionText;
+        }
     }
+
 }
